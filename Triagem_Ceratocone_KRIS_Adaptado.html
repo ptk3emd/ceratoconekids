@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Triagem de Ceratocone Infantil — KRIS Adaptado</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Sora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+
+<style>
+:root {
+  --cor-algodao: #F7F5F2;
+  --cor-leite-po: #FFFBF7;
+  --cor-agua-banho: #5B8DB8;
+  --cor-agua-funda: #4A7599;
+  --cor-acafrao: #E8A243;
+  --cor-acafrao-suave: rgba(232, 162, 67, 0.12);
+  --cor-acafrao-escuro: #B47220;
+  --cor-barro: #C45D3A;
+  --cor-barro-suave: rgba(196, 93, 58, 0.10);
+  --cor-salvia: #6B9E8D;
+  --cor-salvia-suave: rgba(107, 158, 141, 0.12);
+  --cor-grafite: #2D3436;
+  --cor-parede: #636E72;
+  --cor-areia: #DFD8CF;
+  --cor-rosa-compressa: #E8B4B8;
+  --cor-almofada: #E8E4DF;
+
+  --fonte-titulo: 'Nunito', sans-serif;
+  --fonte-corpo: 'Sora', sans-serif;
+  --fonte-manuscrita: 'Caveat', cursive;
+
+  --raio-botao: 14px;
+  --raio-card: 20px;
+  --raio-input: 16px;
+  --raio-capsula: 999px;
+
+  --sombra-card: 0 2px 16px rgba(45, 52, 54, 0.04);
+  --sombra-botao: 0 4px 12px rgba(91, 141, 184, 0.25);
+  --sombra-elevada: 0 10px 32px rgba(45, 52, 54, 0.08);
+
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-suave: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--fonte-corpo);
+  color: var(--cor-grafite);
+  background: var(--cor-algodao);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+body {
+  background-image:
+    radial-gradient(circle at 15% 10%, rgba(232,162,67,0.08), transparent 35%),
+    radial-gradient(circle at 85% 90%, rgba(91,141,184,0.08), transparent 40%),
+    radial-gradient(circle at 90% 15%, rgba(107,158,141,0.06), transparent 30%);
+}
+
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: clamp(20px, 4vw, 48px) clamp(20px, 4vw, 32px);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 32px;
+}
+header.brand .mark {
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  background: var(--cor-leite-po);
+  border: 1px solid var(--cor-areia);
+  display: flex; align-items: center; justify-content: center;
+}
+header.brand .name {
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: 16px;
+}
+header.brand .name span {
+  color: var(--cor-agua-banho);
+}
+header.brand .sub {
+  font-family: var(--fonte-manuscrita);
+  font-size: 17px;
+  color: var(--cor-acafrao);
+  transform: rotate(-2deg);
+  display: inline-block;
+  margin-left: 8px;
+}
+
+.stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+footer.foot {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--cor-areia);
+  font-family: var(--fonte-corpo);
+  font-size: 12px;
+  color: var(--cor-parede);
+  line-height: 1.55;
+  text-align: center;
+}
+
+h1 {
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: clamp(28px, 5vw, 38px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--cor-grafite);
+  text-wrap: balance;
+}
+h2 {
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: clamp(22px, 3.5vw, 28px);
+  line-height: 1.25;
+  margin: 0;
+  color: var(--cor-grafite);
+  text-wrap: balance;
+}
+.lead {
+  font-family: var(--fonte-corpo);
+  font-size: clamp(15px, 2.4vw, 17px);
+  line-height: 1.6;
+  color: var(--cor-parede);
+  text-wrap: pretty;
+  margin: 0;
+}
+.manuscrita {
+  font-family: var(--fonte-manuscrita);
+  color: var(--cor-acafrao);
+  font-size: 24px;
+  line-height: 1.1;
+  display: inline-block;
+  transform: rotate(-2deg);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+  font-size: 16px;
+  padding: 16px 28px;
+  border-radius: var(--raio-botao);
+  transition: transform 0.2s var(--ease-spring), background 0.2s, box-shadow 0.2s, opacity 0.2s;
+  text-decoration: none;
+  outline: none;
+}
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.btn-primary {
+  background: var(--cor-agua-banho);
+  color: var(--cor-leite-po);
+  box-shadow: var(--sombra-botao);
+}
+.btn-primary:not(:disabled):hover {
+  background: var(--cor-agua-funda);
+  transform: translateY(-1px);
+}
+.btn-primary:not(:disabled):active { transform: scale(0.98); }
+.btn-ghost {
+  background: transparent;
+  color: var(--cor-parede);
+}
+.btn-ghost:hover { color: var(--cor-grafite); }
+.btn-secondary {
+  background: var(--cor-leite-po);
+  color: var(--cor-agua-funda);
+  border: 2px solid var(--cor-areia);
+}
+.btn-secondary:hover { border-color: var(--cor-agua-banho); }
+.btn-block { width: 100%; }
+
+.input {
+  width: 100%;
+  background: var(--cor-leite-po);
+  border: 2px solid var(--cor-areia);
+  border-radius: var(--raio-input);
+  padding: 18px 20px;
+  font-family: var(--fonte-corpo);
+  font-size: 18px;
+  color: var(--cor-grafite);
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+.input:focus {
+  border-color: var(--cor-agua-banho);
+  box-shadow: 0 0 0 4px rgba(91,141,184,0.12);
+}
+.input-label {
+  display: block;
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--cor-parede);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  background: var(--cor-leite-po);
+  border: 2px solid var(--cor-areia);
+  border-radius: var(--raio-input);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--fonte-corpo);
+  font-size: 16px;
+  color: var(--cor-grafite);
+  text-align: left;
+  width: 100%;
+}
+.option:hover {
+  border-color: var(--cor-agua-banho);
+  transform: translateY(-1px);
+}
+.option.selected {
+  border-color: var(--cor-agua-banho);
+  background: rgba(91,141,184,0.05);
+  box-shadow: 0 0 0 4px rgba(91,141,184,0.08);
+}
+.option .dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--cor-areia);
+  flex-shrink: 0;
+  position: relative;
+  transition: all 0.2s var(--ease-spring);
+}
+.option.selected .dot {
+  border-color: var(--cor-agua-banho);
+}
+.option.selected .dot::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: var(--cor-agua-banho);
+}
+
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.progress-row .count {
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--cor-grafite);
+  white-space: nowrap;
+}
+.progress-row .count em {
+  color: var(--cor-acafrao);
+  font-style: normal;
+}
+.progress {
+  flex: 1;
+  height: 8px;
+  background: var(--cor-almofada);
+  border-radius: var(--raio-capsula);
+  overflow: hidden;
+}
+.progress > .fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--cor-acafrao), var(--cor-barro));
+  border-radius: var(--raio-capsula);
+  transition: width 0.6s var(--ease-spring);
+}
+
+.disclaimer {
+  display: flex;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--cor-acafrao-suave);
+  border: 1px solid rgba(232, 162, 67, 0.25);
+  border-radius: var(--raio-input);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--cor-grafite);
+}
+.disclaimer .ico {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--cor-acafrao);
+  color: var(--cor-leite-po);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--fonte-titulo);
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  font-family: var(--fonte-corpo);
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: var(--raio-capsula);
+}
+.chip::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.chip-salvia { background: var(--cor-salvia-suave); color: var(--cor-salvia); }
+.chip-acafrao { background: var(--cor-acafrao-suave); color: var(--cor-acafrao-escuro); }
+.chip-barro { background: var(--cor-barro-suave); color: var(--cor-barro); }
+.chip-urgencia {
+  background: rgba(196, 93, 58, 0.15);
+  color: #C45D3A;
+  border: 1px solid rgba(196, 93, 58, 0.3);
+}
+
+@keyframes entrada-baixo {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.entrada {
+  animation: entrada-baixo 0.5s var(--ease-suave) both;
+}
+.delay-1 { animation-delay: 60ms; }
+.delay-2 { animation-delay: 120ms; }
+.delay-3 { animation-delay: 180ms; }
+.delay-4 { animation-delay: 240ms; }
+.delay-5 { animation-delay: 300ms; }
+.delay-6 { animation-delay: 360ms; }
+
+@keyframes pop {
+  0% { transform: scale(0.4); opacity: 0; }
+  60% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.pop { animation: pop 0.7s var(--ease-spring) both; }
+
+@keyframes pulse-urgencia {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(196, 93, 58, 0.3); }
+  50% { box-shadow: 0 0 0 12px rgba(196, 93, 58, 0); }
+}
+.pulse-urgencia {
+  animation: pulse-urgencia 2s infinite;
+}
+
+.screen { display: none; }
+.screen.active { display: flex; flex-direction: column; flex: 1; }
+
+.question-block {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.question-block .options {
+  display: grid;
+  gap: 12px;
+  margin-top: 28px;
+}
+.question-block .sub {
+  font-size: 15px;
+  color: var(--cor-parede);
+  margin-top: 10px;
+  line-height: 1.5;
+}
+.question-block .actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+  align-items: center;
+}
+.question-block .actions .btn-primary {
+  flex: 1;
+}
+
+.result-wheel-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 28px;
+}
+.result-block { padding: 0; }
+
+.factors {
+  display: grid;
+  gap: 8px;
+  margin-top: 16px;
+}
+.factor {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: var(--cor-leite-po);
+  border: 1px solid var(--cor-areia);
+  border-radius: var(--raio-input);
+  font-size: 15px;
+}
+.factor .ico {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.section-label {
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--cor-parede);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 28px 0 12px;
+}
+
+.next-step {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 18px 20px;
+  border-radius: var(--raio-card);
+}
+.next-step .pill {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.next-step .label {
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: currentColor;
+  opacity: 0.85;
+}
+.next-step .title {
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: 17px;
+  margin-top: 2px;
+}
+
+.result-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+}
+.result-actions .btn { flex: 1; min-width: 200px; }
+
+.welcome-illust {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0 12px;
+}
+.welcome-illust svg {
+  filter: drop-shadow(0 8px 24px rgba(45,52,54,0.08));
+}
+
+.alert-box {
+  display: flex;
+  gap: 14px;
+  padding: 18px 20px;
+  background: rgba(196, 93, 58, 0.08);
+  border: 2px solid rgba(196, 93, 58, 0.25);
+  border-radius: var(--raio-card);
+  margin-bottom: 24px;
+}
+.alert-box .alert-ico {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #C45D3A;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.alert-box .alert-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--cor-grafite);
+}
+.alert-box .alert-text strong {
+  color: #C45D3A;
+}
+
+.input-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 480px) {
+  .result-actions .btn { min-width: 100%; }
+  .welcome-illust svg { width: 180px; height: 180px; }
+  .input-row { grid-template-columns: 1fr; }
+}
+
+/* Print report styles */
+@media print {
+  body { background: white; }
+  .page { max-width: 100%; padding: 20px; }
+  .no-print { display: none !important; }
+  .print-only { display: block !important; }
+}
+.print-only { display: none; }
+
+.report-header {
+  text-align: center;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--cor-areia);
+  margin-bottom: 24px;
+}
+.report-header h1 {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+.report-meta {
+  font-size: 13px;
+  color: var(--cor-parede);
+  margin-top: 8px;
+}
+.report-section {
+  margin-bottom: 20px;
+}
+.report-section h3 {
+  font-family: var(--fonte-titulo);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--cor-parede);
+  margin-bottom: 10px;
+}
+.report-answers {
+  display: grid;
+  gap: 8px;
+}
+.report-answer {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--cor-leite-po);
+  border-radius: 10px;
+  font-size: 14px;
+}
+.report-answer .q { color: var(--cor-parede); }
+.report-answer .a { font-weight: 600; color: var(--cor-grafite); }
+
+.report-score-box {
+  text-align: center;
+  padding: 24px;
+  background: var(--cor-leite-po);
+  border-radius: var(--raio-card);
+  margin-bottom: 20px;
+}
+.report-score-box .score-num {
+  font-family: var(--fonte-titulo);
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--cor-grafite);
+}
+.report-score-box .score-label {
+  font-size: 14px;
+  color: var(--cor-parede);
+  margin-top: 4px;
+}
+
+.report-footer {
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid var(--cor-areia);
+  font-size: 12px;
+  color: var(--cor-parede);
+  line-height: 1.6;
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="brand no-print">
+    <div class="mark">
+      <svg width="24" height="24" viewBox="0 0 24 24">
+        <ellipse cx="12" cy="12" rx="9" ry="5.5" fill="none" stroke="#2D3436" stroke-width="1.8"/>
+        <circle cx="12" cy="12" r="3.5" fill="#5B8DB8"/>
+        <circle cx="12" cy="12" r="1.4" fill="#2D3436"/>
+        <path d="M19 6 Q 19 5, 20 5 Q 21 5, 21 6 Q 21 7, 20 8 Q 19 7, 19 6z" fill="#E8B4B8"/>
+      </svg>
+    </div>
+    <div>
+      <div class="name">Alerta Ceratocone <span>Kids</span></div>
+    </div>
+    <div class="sub">triagem em 3 minutos</div>
+  </header>
+
+  <main class="stage">
+
+    <!-- SCREEN: Welcome -->
+    <section class="screen active" data-screen="welcome">
+      <div class="welcome-illust entrada no-print">
+        <svg viewBox="0 0 220 220" width="220" height="220">
+          <ellipse cx="110" cy="200" rx="80" ry="10" fill="rgba(45,52,54,0.05)"/>
+          <path d="M40 120 Q 60 60, 110 60 T 180 120 Q 195 165, 150 180 Q 110 195, 70 180 Q 25 165, 40 120 Z" fill="#FCE9D7" opacity="0.85"/>
+          <ellipse cx="75" cy="190" rx="35" ry="14" fill="#5B8DB8" opacity="0.85"/>
+          <path d="M50 195 L 50 130 Q 50 105, 75 105 Q 100 105, 100 130 L 100 195 Z" fill="#5B8DB8"/>
+          <circle cx="75" cy="85" r="22" fill="#E8B98F"/>
+          <path d="M55 80 Q 60 60, 75 60 Q 92 60, 97 80 Q 95 70, 75 70 Q 60 70, 55 80z" fill="#3A2E2A"/>
+          <circle cx="69" cy="86" r="1.3" fill="#2D3436"/>
+          <circle cx="81" cy="86" r="1.3" fill="#2D3436"/>
+          <path d="M71 93 Q 75 96, 79 93" stroke="#2D3436" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+          <ellipse cx="145" cy="195" rx="28" ry="11" fill="#E8A243" opacity="0.85"/>
+          <path d="M125 198 L 125 150 Q 125 132, 145 132 Q 165 132, 165 150 L 165 198 Z" fill="#E8A243"/>
+          <circle cx="145" cy="115" r="18" fill="#F2D2B6"/>
+          <path d="M128 110 Q 132 95, 145 95 Q 160 95, 162 110 Q 160 102, 145 102 Q 133 102, 128 110z" fill="#5C3A2E"/>
+          <circle cx="140" cy="116" r="1.2" fill="#2D3436"/>
+          <circle cx="150" cy="116" r="1.2" fill="#2D3436"/>
+          <path d="M142 122 Q 145 124, 148 122" stroke="#2D3436" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+          <path d="M100 145 Q 115 138, 130 142" stroke="#E8B98F" stroke-width="12" fill="none" stroke-linecap="round"/>
+          <path d="M108 75 Q 108 70, 113 70 Q 117 70, 117 75 Q 117 80, 113 85 Q 108 80, 108 75z" fill="#E8B4B8"/>
+        </svg>
+      </div>
+
+      <h1 class="entrada delay-1">Vamos avaliar se seu filho tem sinais de ceratocone?</h1>
+      <p class="lead entrada delay-2" style="margin-top: 16px;">
+        São <strong>10 perguntas rápidas</strong> sobre o dia a dia da criança — sem certo nem errado. No final, você vê um score de risco e o próximo passo recomendado.
+      </p>
+
+      <div class="entrada delay-3" style="margin-top: 32px;">
+        <label class="input-label" for="kid-name">Como seu filho(a) se chama?</label>
+        <input id="kid-name" class="input" type="text" placeholder="Ex: Sofia" autocomplete="off" maxlength="40"/>
+      </div>
+
+      <div class="entrada delay-3" style="margin-top: 20px;">
+        <div class="input-row">
+          <div>
+            <label class="input-label" for="kid-age">Idade (anos)</label>
+            <input id="kid-age" class="input" type="number" min="0" max="18" placeholder="Ex: 12"/>
+          </div>
+          <div>
+            <label class="input-label" for="kid-sex">Sexo</label>
+            <select id="kid-sex" class="input" style="padding: 18px 16px;">
+              <option value="" disabled selected>Selecione</option>
+              <option value="F">Feminino</option>
+              <option value="M">Masculino</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="entrada delay-4" style="margin-top: 32px;">
+        <button id="start-btn" class="btn btn-primary btn-block" disabled>
+          Começar triagem
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M5 12h14m-5-5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="entrada delay-5" style="margin-top: 24px;">
+        <div class="disclaimer">
+          <div class="ico">i</div>
+          <span>Esta ferramenta <strong>não diagnostica</strong> ceratocone. Ela ajuda a identificar sinais que merecem avaliação de um oftalmologista. Nenhum dado sai do seu navegador.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN: Triagem -->
+    <section class="screen" data-screen="triagem">
+      <div class="progress-row no-print">
+        <span class="count">Pergunta <em id="q-num">1</em> de <em id="q-total">10</em></span>
+        <div class="progress"><div class="fill" id="q-fill" style="width: 10%"></div></div>
+      </div>
+
+      <div class="question-block" id="q-block">
+        <!-- Filled by JS -->
+      </div>
+    </section>
+
+    <!-- SCREEN: Resultado -->
+    <section class="screen" data-screen="resultado">
+      <div class="result-wheel-wrap no-print">
+        <div class="pop" id="result-wheel"></div>
+      </div>
+
+      <div style="text-align: center;" class="no-print">
+        <span id="result-chip" class="chip chip-acafrao entrada">Atenção amigável</span>
+      </div>
+
+      <!-- Red Flag Alert -->
+      <div id="redflag-box" class="alert-box entrada delay-1 no-print" style="display:none;">
+        <div class="alert-ico">!</div>
+        <div class="alert-text">
+          <strong>Alerta clínico identificado:</strong> a combinação de visão embaçada/distórica + fotofobia intensa + esfregaço forte nos olhos indica necessidade de <strong>avaliação oftalmológica em 2–5 dias</strong>, independentemente do score numérico.
+        </div>
+      </div>
+
+      <h1 id="result-title" class="entrada delay-1" style="margin-top: 16px; text-align: center;">—</h1>
+
+      <p id="result-sub" class="lead entrada delay-2" style="margin-top: 14px; text-align: center;">—</p>
+
+      <div class="section-label entrada delay-3 no-print">O que a gente notou</div>
+      <div class="factors entrada delay-3 no-print" id="result-factors"></div>
+
+      <div class="section-label entrada delay-4 no-print">Próximo passo</div>
+      <div class="next-step entrada delay-4 no-print" id="result-nextstep">
+        <div class="pill" id="result-pill">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="5" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="label">Recomendação</div>
+          <div class="title" id="result-action">—</div>
+        </div>
+      </div>
+
+      <div class="result-actions entrada delay-5 no-print">
+        <button class="btn btn-secondary" id="restart-btn">Refazer triagem</button>
+        <button class="btn btn-primary" id="print-btn">
+          Imprimir / Salvar PDF
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M6 9V4h12v5M6 18H4a1 1 0 01-1-1v-5a1 1 0 011-1h16a1 1 0 011 1v5a1 1 0 01-1 1h-2M6 14h12v7H6z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="entrada delay-6 no-print" style="margin-top: 24px;">
+        <div class="disclaimer">
+          <div class="ico">i</div>
+          <span>Triagem <strong>adaptada e derivada</strong> do KRIS (Keratoconus Risk Investigative Survey), instrumento original de 29 itens de Moodley & Mashige. <strong>As métricas de sensibilidade/especificidade do KRIS original não se aplicam</strong> a esta versão reduzida. Não substitui consulta com oftalmologista.</span>
+        </div>
+      </div>
+
+      <!-- PRINT REPORT -->
+      <div class="print-only" id="print-report">
+        <div class="report-header">
+          <h1>Relatório de Triagem — Alerta Ceratocone Kids</h1>
+          <div class="report-meta">
+            Paciente: <strong id="report-name"></strong> | 
+            Idade: <strong id="report-age"></strong> | 
+            Sexo: <strong id="report-sex"></strong> | 
+            Data: <strong id="report-date"></strong>
+          </div>
+        </div>
+
+        <div class="report-score-box">
+          <div class="score-num" id="report-score"></div>
+          <div class="score-label">de 10 pontos — <span id="report-level"></span></div>
+        </div>
+
+        <div id="report-redflag" class="report-section" style="display:none;">
+          <h3 style="color:#C45D3A;">⚠ Alerta de Urgência Clínica</h3>
+          <p style="font-size:14px; line-height:1.6;">
+            Identificada combinação de visão embaçada/distórica + fotofobia intensa + esfregaço forte nos olhos. 
+            <strong>Recomenda-se avaliação oftalmológica em 2–5 dias.</strong>
+          </p>
+        </div>
+
+        <div class="report-section">
+          <h3>Respostas do questionário</h3>
+          <div class="report-answers" id="report-answers"></div>
+        </div>
+
+        <div class="report-section">
+          <h3>Recomendação médica</h3>
+          <p id="report-recommendation" style="font-size:15px; line-height:1.6;"></p>
+        </div>
+
+        <div class="report-section">
+          <h3>Sinais identificados</h3>
+          <div id="report-factors" style="font-size:14px; line-height:1.6;"></div>
+        </div>
+
+        <div class="report-footer">
+          <strong>Aviso importante:</strong> Esta triagem é uma adaptação derivada do KRIS (Keratoconus Risk Investigative Survey), instrumento original de 29 itens validado por Moodley & Mashige. 
+          O escore e os pontos de corte desta versão reduzida <strong>não possuem validação psicométrica independente</strong>. 
+          Recomenda-se uso como ferramenta de conscientização, não como instrumento diagnóstico. 
+          Em caso de dúvida, procure um oftalmologista pediátrico.<br/><br/>
+          Documento gerado automaticamente. Não contém assinatura médica.
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="foot no-print">
+    Triagem adaptada e derivada do KRIS (Keratoconus Risk Investigative Survey) · Versão pt-BR<br/>
+    Em caso de dúvida, procure um oftalmologista pediátrico.
+  </footer>
+</div>
+
+<script>
+// ============================================================
+// DATA — KRIS Adaptado (10 perguntas principais + 2 contextuais)
+// ============================================================
+const QUESTIONS = [
+  {
+    id: "sistemica",
+    title: "{nome} tem alguma dessas condições de saúde?",
+    sub: "Síndrome de Down, Ehlers-Danlos, Osteogênese Imperfeita, Apneia do sono ou Leber congênita. Se não souber, marque 'Não sei'.",
+    options: [
+      { v: "sim",    label: "Sim, tem alguma dessas",   weight: 1, factorIfHigh: "Doença sistêmica associada ao ceratocone" },
+      { v: "naosei", label: "Não sei dizer",            weight: 0.3, factorIfHigh: null },
+      { v: "nao",    label: "Não tem nenhuma",          weight: 0, factorIfHigh: null },
+    ],
+    isRedFlagTrigger: false
+  },
+  {
+    id: "consanguinidade",
+    title: "Os pais de {nome} são parentes de sangue?",
+    sub: "Primos, primos segundos ou parentes distantes.",
+    options: [
+      { v: "1grau",  label: "Sim, primos (1º grau)",   weight: 1, factorIfHigh: "Consanguinidade parental (1º grau)" },
+      { v: "2grau",  label: "Sim, primos segundos",     weight: 0.7, factorIfHigh: "Consanguinidade parental (2º grau)" },
+      { v: "distante", label: "Parentes distantes",      weight: 0.3, factorIfHigh: null },
+      { v: "nao",    label: "Não são parentes",         weight: 0, factorIfHigh: null },
+    ],
+    isRedFlagTrigger: false
+  },
+  {
+    id: "alergia",
+    title: "{nome} tem alguma alergia ou doença atópica?",
+    sub: "Rinite alérgica, asma, dermatite atópica, conjuntivite alérgica ou Vernal (primavera).",
+    options: [
+      { v: "vkc",    label: "Tem conjuntivite vernal (VKC)", weight: 1, factorIfHigh: "Conjuntivite vernal (VKC) — forte preditor" },
+      { v: "sim",    label: "Tem outra alergia/atopia",      weight: 0.7, factorIfHigh: "Condição atópica em atividade" },
+      { v: "naosei", label: "Não sei dizer",                 weight: 0.3, factorIfHigh: null },
+      { v: "nao",    label: "Não tem nenhuma",               weight: 0, factorIfHigh: null },
+    ],
+    isRedFlagTrigger: false
+  },
+  {
+    id: "cocar",
+    title: "Com que frequência {nome} coça os olhos?",
+    sub: "Pense numa semana comum.",
+    options: [
+      { v: "muito",  label: "Várias vezes por dia",     weight: 1, factorIfHigh: "Coça os olhos com frequência" },
+      { v: "as",     label: "Uma vez ou outra",         weight: 0.5, factorIfHigh: null },
+      { v: "pouco",  label: "Quase nunca",              weight: 0, factorIfHigh: null },
+    ],
+    isRedFlagTrigger: true  // part of red flag
+  },
+  {
+    id: "intensidade",
+    title: "Quando coça, {nome} esfrega com força?",
+    sub: "Usar o nó dos dedos, palma da mão, ou virar a cabeça no travesseiro para coçar.",
+    options: [
+      { v: "forte",  label: "Sim, com bastante força",  weight: 1, factorIfHigh: "Esfrega os olhos com intensidade" },
+      { v: "leve",   label: "Mais um cafuné leve",      weight: 0.3, factorIfHigh: null },
+      { v: "nao",    label: "Não esfrega forte",        weight: 0, factorIfHigh: null },
+    ],
+    isRedFlagTrigger: true  // part of red flag
+  },
+  {
+    id: "dormir",
+    title: "{nome} dorme com o rosto no travesseiro?",
+    sub: "De bruços ou de lado, com o olho encostado no tecido.",
+    options: [
+      { v: "sempre", label: "Quase toda noite",         weight: 1, factorIfHigh: "Posição de dormir esfrega os olhos" },
+      { v: "as",     label: "Às vezes",                 weight: 0.5, factorIfHigh: null },
+      { v: "nao",    label: "Não, dorme de costas",     weight: 0, factorIfHigh: null },
+    ],
+    isRedFlagTrigger: false
+  },
+  {
+    id: "visao",
+    title: "Você notou a visão de {nome} embaçada ou distorcida?",
+    sub: "Aproximar o caderno do rosto, reclamar de não enxergar o quadro, ver halos ao redor de luzes.",
+    options: [
+      { v: "sim",    label: "Sim, notei",                weight: 1, factorIfHigh: "Queixas de visão embaçada ou distorcida" },
+      { v: "as",     label: "Uma vez ou outra",          weight: 0.5, factorIfHigh: null },
+      { v: "nao",    label: "Não, parece tudo normal",   weight: 0, factorIfHigh: null },
+    ],
+    isRedFlagTrigger: true  // part of red flag
+  },
+  {
+    id: "grau",
+    title: "O oftalmologista mencionou aumento de astigmatismo ou formato de cone na córnea?",
+    sub: "Diferente de simplesmente 'trocar de grau'. Refere-se à forma da córnea.",
+    options: [
+      { v: "sim",    label: "Sim, mencionou",            weight: 1, factorIfHigh: "Progressão de astigmatismo/córnea em cone" },
+      { v: "naosei", label: "Não sei / Não lembro",      weight: 0.3, factorIfHigh: null },
+      { v: "nao",    label: "Não, nada disso",           weight: 0, factorIfHigh: null },
+      { v: "naotem", label: "Nunca foi ao oftalmologista", weight: 0, factorIfHigh: null },
+    ],
+    isRedFlagTrigger: false
+  },
+  {
+    id: "familia",
+    title: "Alguém da família tem ceratocone?",
+    sub: "Pais, tios, avós, irmãos.",
+    options: [
+      { v: "sim",    label: "Sim, alguém da família",    weight: 1, factorIfHigh: "Histórico familiar de ceratocone" },
+      { v: "naosei", label: "Não sei dizer",             weight: 0.3, factorIfHigh: null },
+      { v: "nao",    label: "Não",                       weight: 0, factorIfHigh: null },
+    ],
+    isRedFlagTrigger: false
+  },
+  {
+    id: "luz",
+    title: "{nome} reclama de incômodo com luz forte?",
+    sub: "Sol, lâmpada branca, tela de celular no escuro.",
+    options: [
+      { v: "muito",  label: "Reclama bastante",          weight: 1, factorIfHigh: "Sensibilidade à luz (fotofobia)" },
+      { v: "as",     label: "Só às vezes",               weight: 0.5, factorIfHigh: null },
+      { v: "nao",    label: "Não reclama",               weight: 0, factorIfHigh: null },
+    ],
+    isRedFlagTrigger: true  // part of red flag
+  },
+];
+
+const LEVELS = {
+  low: {
+    chip: "salvia",
+    chipLabel: "Sinais baixos",
+    title: "Por enquanto, tudo tranquilo por aqui",
+    sub: "{nome} apresenta poucos sinais associados ao ceratocone. Continue de olho (com carinho) nos hábitos do dia a dia.",
+    action: "Repetir a triagem em 12 meses",
+    pillBg: "rgba(107,158,141,0.18)",
+    pillColor: "#6B9E8D",
+    stroke: "#6B9E8D",
+    wheelBg: "rgba(107,158,141,0.15)",
+    bgWrap: "rgba(107,158,141,0.06)",
+    bgBorder: "rgba(107,158,141,0.3)",
+  },
+  med: {
+    chip: "acafrao",
+    chipLabel: "Atenção amigável",
+    title: "Tem alguns sinais que valem uma olhada",
+    sub: "Nada de desespero — a maioria das coisas tem jeito quando a gente descobre cedo. Vale marcar uma consulta nos próximos meses.",
+    action: "Consulta com oftalmologista em até 6 meses",
+    pillBg: "rgba(232,162,67,0.18)",
+    pillColor: "#B47220",
+    stroke: "#E8A243",
+    wheelBg: "rgba(232,162,67,0.15)",
+    bgWrap: "rgba(232,162,67,0.08)",
+    bgBorder: "rgba(232,162,67,0.3)",
+  },
+  high: {
+    chip: "barro",
+    chipLabel: "Vale priorizar",
+    title: "Marque um oftalmologista nas próximas semanas",
+    sub: "{nome} tem sinais que a gente não pode ignorar. Sem pânico, viu? Detectar cedo é o melhor que pode acontecer.",
+    action: "Consulta com oftalmologista em 2 a 4 semanas",
+    pillBg: "rgba(196,93,58,0.18)",
+    pillColor: "#C45D3A",
+    stroke: "#C45D3A",
+    wheelBg: "rgba(196,93,58,0.15)",
+    bgWrap: "rgba(196,93,58,0.08)",
+    bgBorder: "rgba(196,93,58,0.3)",
+  }
+};
+
+// ============================================================
+// STATE
+// ============================================================
+const state = {
+  nome: "",
+  idade: "",
+  sexo: "",
+  step: 0,
+  answers: {},
+};
+
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => document.querySelectorAll(s);
+
+function showScreen(name) {
+  $$(".screen").forEach(s => s.classList.toggle("active", s.dataset.screen === name));
+  window.scrollTo({ top: 0, behavior: "instant" });
+}
+
+function applyName(text) {
+  return text.replace(/\{nome\}/g, state.nome || "seu filho(a)");
+}
+
+// ============================================================
+// SCREEN 1 — Welcome
+// ============================================================
+const kidInput = $("#kid-name");
+const ageInput = $("#kid-age");
+const sexInput = $("#kid-sex");
+const startBtn = $("#start-btn");
+
+function checkStartReady() {
+  const nomeOk = kidInput.value.trim().length >= 2;
+  const ageOk = ageInput.value && parseInt(ageInput.value) >= 0 && parseInt(ageInput.value) <= 18;
+  const sexOk = sexInput.value !== "";
+  startBtn.disabled = !(nomeOk && ageOk && sexOk);
+}
+
+[kidInput, ageInput, sexInput].forEach(el => {
+  el.addEventListener("input", checkStartReady);
+  el.addEventListener("change", checkStartReady);
+});
+
+kidInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && !startBtn.disabled) startBtn.click();
+});
+
+startBtn.addEventListener("click", () => {
+  state.nome = kidInput.value.trim();
+  state.idade = ageInput.value;
+  state.sexo = sexInput.value === "M" ? "Masculino" : "Feminino";
+  state.step = 0;
+  state.answers = {};
+  $("#q-total").textContent = QUESTIONS.length;
+  renderQuestion();
+  showScreen("triagem");
+});
+
+// ============================================================
+// SCREEN 2 — Question rendering
+// ============================================================
+function renderQuestion() {
+  const i = state.step;
+  const q = QUESTIONS[i];
+  $("#q-num").textContent = i + 1;
+  $("#q-fill").style.width = `${((i + 1) / QUESTIONS.length) * 100}%`;
+
+  const block = $("#q-block");
+  block.innerHTML = "";
+
+  const h = document.createElement("h2");
+  h.className = "entrada";
+  h.textContent = applyName(q.title);
+  block.appendChild(h);
+
+  const sub = document.createElement("p");
+  sub.className = "sub entrada delay-1";
+  sub.textContent = q.sub;
+  block.appendChild(sub);
+
+  const wrap = document.createElement("div");
+  wrap.className = "options";
+  q.options.forEach((opt, idx) => {
+    const btn = document.createElement("button");
+    btn.className = "option entrada";
+    btn.style.animationDelay = `${(idx + 2) * 60}ms`;
+    btn.dataset.value = opt.v;
+    if (state.answers[q.id] === opt.v) btn.classList.add("selected");
+    btn.innerHTML = `<span class="dot"></span><span>${opt.label}</span>`;
+    btn.addEventListener("click", () => {
+      state.answers[q.id] = opt.v;
+      wrap.querySelectorAll(".option").forEach(o => o.classList.remove("selected"));
+      btn.classList.add("selected");
+      nextBtn.disabled = false;
+    });
+    wrap.appendChild(btn);
+  });
+  block.appendChild(wrap);
+
+  const actions = document.createElement("div");
+  actions.className = "actions entrada delay-5";
+
+  const backBtn = document.createElement("button");
+  backBtn.className = "btn btn-ghost";
+  backBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M19 12H5m5-5l-5 5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Voltar`;
+  backBtn.addEventListener("click", () => {
+    if (state.step > 0) {
+      state.step--;
+      renderQuestion();
+    } else {
+      showScreen("welcome");
+    }
+  });
+  actions.appendChild(backBtn);
+
+  const nextBtn = document.createElement("button");
+  nextBtn.className = "btn btn-primary";
+  nextBtn.disabled = !state.answers[q.id];
+  nextBtn.innerHTML = `${i === QUESTIONS.length - 1 ? "Ver resultado" : "Próxima"}<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-5-5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  nextBtn.addEventListener("click", () => {
+    if (i < QUESTIONS.length - 1) {
+      state.step++;
+      renderQuestion();
+    } else {
+      computeAndShowResult();
+    }
+  });
+  actions.appendChild(nextBtn);
+
+  block.appendChild(actions);
+}
+
+// ============================================================
+// SCREEN 3 — Result
+// ============================================================
+function computeAndShowResult() {
+  let total = 0;
+  const factors = [];
+  let redFlagTriggered = false;
+
+  // Check red flags: visao=sim AND intensidade=forte AND luz=muito
+  const visaoAns = state.answers["visao"];
+  const intensidadeAns = state.answers["intensidade"];
+  const luzAns = state.answers["luz"];
+  const cocarAns = state.answers["cocar"];
+
+  // Red flag: visao embaçada + (fotofobia intensa OR esfregaço frequente intenso)
+  const hasVisao = visaoAns === "sim";
+  const hasFotofobia = luzAns === "muito";
+  const hasEsfregacoForte = intensidadeAns === "forte";
+  const hasEsfregacoFrequente = cocarAns === "muito";
+
+  if (hasVisao && (hasFotofobia || (hasEsfregacoForte && hasEsfregacoFrequente))) {
+    redFlagTriggered = true;
+  }
+
+  QUESTIONS.forEach(q => {
+    const a = state.answers[q.id];
+    const opt = q.options.find(o => o.v === a);
+    if (!opt) return;
+    total += opt.weight;
+    if (opt.factorIfHigh) {
+      factors.push({ text: opt.factorIfHigh, weight: opt.weight });
+    }
+  });
+
+  const score = Math.round(total * 10) / 10;
+  const maxScore = QUESTIONS.length;
+
+  let level;
+  if (redFlagTriggered) {
+    level = "high"; // force high if red flag
+  } else if (total <= 1.5) {
+    level = "low";
+  } else if (total <= 3.5) {
+    level = "med";
+  } else {
+    level = "high";
+  }
+
+  const cfg = LEVELS[level];
+
+  // chip
+  const chip = $("#result-chip");
+  if (redFlagTriggered) {
+    chip.className = "chip chip-urgencia entrada";
+    chip.textContent = "⚠ Urgência clínica";
+  } else {
+    chip.className = `chip chip-${cfg.chip} entrada`;
+    chip.textContent = cfg.chipLabel;
+  }
+
+  // wheel
+  renderWheel(score, maxScore, cfg.stroke, cfg.wheelBg);
+
+  // red flag box
+  const rfBox = $("#redflag-box");
+  if (redFlagTriggered) {
+    rfBox.style.display = "flex";
+    rfBox.classList.add("pulse-urgencia");
+  } else {
+    rfBox.style.display = "none";
+    rfBox.classList.remove("pulse-urgencia");
+  }
+
+  // title + sub
+  $("#result-title").textContent = applyName(cfg.title);
+  $("#result-sub").innerHTML = applyName(cfg.sub);
+
+  // factors
+  const fwrap = $("#result-factors");
+  fwrap.innerHTML = "";
+  if (factors.length === 0) {
+    const f = document.createElement("div");
+    f.className = "factor";
+    f.innerHTML = `<div class="ico" style="background: ${cfg.wheelBg}; color: ${cfg.stroke};"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5 9-11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Nenhum sinal de risco relevante identificado</span>`;
+    fwrap.appendChild(f);
+  } else {
+    factors
+      .sort((a, b) => b.weight - a.weight)
+      .forEach(({ text }) => {
+        const f = document.createElement("div");
+        f.className = "factor";
+        f.innerHTML = `<div class="ico" style="background: ${cfg.wheelBg}; color: ${cfg.stroke};"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5 9-11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>${text}</span>`;
+        fwrap.appendChild(f);
+      });
+  }
+
+  // next step
+  const actionText = redFlagTriggered 
+    ? "Avaliação oftalmológica em 2–5 dias (urgência por sinais combinados)"
+    : cfg.action;
+  $("#result-action").textContent = actionText;
+  const nextStep = $("#result-nextstep");
+  nextStep.style.background = cfg.bgWrap;
+  nextStep.style.border = `1px solid ${cfg.bgBorder}`;
+  const pill = $("#result-pill");
+  pill.style.background = cfg.pillBg;
+  pill.style.color = cfg.pillColor;
+
+  // Build print report
+  buildPrintReport(score, maxScore, level, redFlagTriggered, factors, actionText);
+
+  showScreen("resultado");
+}
+
+function renderWheel(score, max, stroke, bg) {
+  const r = 80;
+  const c = 2 * Math.PI * r;
+  const pct = Math.min(score / max, 1);
+  const dashOffset = c - c * pct;
+
+  $("#result-wheel").innerHTML = `
+    <svg viewBox="0 0 200 200" width="200" height="200">
+      <circle cx="100" cy="100" r="${r}" fill="none" stroke="${bg}" stroke-width="14"/>
+      <circle cx="100" cy="100" r="${r}" fill="none"
+              stroke="${stroke}" stroke-width="14" stroke-linecap="round"
+              stroke-dasharray="${c}" stroke-dashoffset="${c}"
+              transform="rotate(-90 100 100)" id="wheel-arc"/>
+      <text x="100" y="98" text-anchor="middle"
+            font-family="Sora, sans-serif" font-weight="700" font-size="48" fill="#2D3436">
+        ${score.toString().replace(".", ",")}
+      </text>
+      <text x="100" y="128" text-anchor="middle"
+            font-family="Sora, sans-serif" font-weight="400" font-size="13" fill="#636E72">
+        de ${max} pontos
+      </text>
+    </svg>
+  `;
+  requestAnimationFrame(() => {
+    const arc = document.getElementById("wheel-arc");
+    if (arc) {
+      arc.style.transition = "stroke-dashoffset 1s cubic-bezier(0.34,1.56,0.64,1)";
+      arc.style.strokeDashoffset = dashOffset;
+    }
+  });
+}
+
+// ============================================================
+// PRINT REPORT
+// ============================================================
+function buildPrintReport(score, maxScore, level, redFlag, factors, actionText) {
+  const levelLabels = { low: "Risco baixo", med: "Risco médio", high: "Risco alto" };
+
+  $("#report-name").textContent = state.nome;
+  $("#report-age").textContent = state.idade + " anos";
+  $("#report-sex").textContent = state.sexo;
+  $("#report-date").textContent = new Date().toLocaleDateString("pt-BR");
+  $("#report-score").textContent = score.toString().replace(".", ",");
+  $("#report-level").textContent = levelLabels[level] + (redFlag ? " + ALERTA DE URGÊNCIA" : "");
+
+  const rfSection = $("#report-redflag");
+  rfSection.style.display = redFlag ? "block" : "none";
+
+  const ansWrap = $("#report-answers");
+  ansWrap.innerHTML = "";
+  QUESTIONS.forEach(q => {
+    const a = state.answers[q.id];
+    const opt = q.options.find(o => o.v === a);
+    const div = document.createElement("div");
+    div.className = "report-answer";
+    div.innerHTML = `<span class="q">${applyName(q.title).replace(/\?.*$/, "?")}</span><span class="a">${opt ? opt.label : "—"}</span>`;
+    ansWrap.appendChild(div);
+  });
+
+  $("#report-recommendation").textContent = actionText + ".";
+
+  const facWrap = $("#report-factors");
+  if (factors.length === 0) {
+    facWrap.innerHTML = "Nenhum sinal de risco relevante identificado.";
+  } else {
+    facWrap.innerHTML = factors.map(f => `• ${f.text}`).join("<br/>");
+  }
+}
+
+// ============================================================
+// ACTIONS
+// ============================================================
+$("#restart-btn").addEventListener("click", () => {
+  state.step = 0;
+  state.answers = {};
+  kidInput.value = state.nome;
+  ageInput.value = state.idade;
+  sexInput.value = state.sexo === "Masculino" ? "M" : "F";
+  checkStartReady();
+  showScreen("welcome");
+});
+
+$("#print-btn").addEventListener("click", () => {
+  window.print();
+});
+</script>
+
+</body>
+</html>
