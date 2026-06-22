@@ -271,6 +271,8 @@ h2 {
   border-radius: 50%;
   background: var(--cor-agua-banho);
 }
+.option.option-multi .dot { border-radius: 6px; }
+.option.option-multi.selected .dot::after { border-radius: 2px; }
 
 .progress-row {
   display: flex;
@@ -625,6 +627,22 @@ h2 {
   color: var(--cor-parede);
   line-height: 1.6;
 }
+
+.report-references ol {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--cor-grafite);
+}
+.report-references li { margin-bottom: 6px; }
+
+@media print {
+  .report-section, .report-references, .report-footer {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
 </style>
 <base target="_blank">
 </head>
@@ -744,7 +762,7 @@ h2 {
       <div id="redflag-box" class="alert-box entrada delay-1 no-print" style="display:none;">
         <div class="alert-ico">!</div>
         <div class="alert-text">
-          <strong>Alerta clínico identificado:</strong> a combinação de visão embaçada/distórica + fotofobia intensa + esfregaço forte nos olhos indica necessidade de <strong>avaliação oftalmológica em 2–5 dias</strong>, independentemente do score numérico.
+          <strong>Alerta clínico identificado:</strong> a combinação de queixa visual qualitativa (visão embaçada, halos ou distorção) + fotofobia intensa + esfregaço forte nos olhos indica necessidade de <strong>avaliação oftalmológica em 2–5 dias</strong>, independentemente do score numérico.
         </div>
       </div>
 
@@ -806,7 +824,7 @@ h2 {
         <div id="report-redflag" class="report-section" style="display:none;">
           <h3 style="color:#C45D3A;">⚠ Alerta de Urgência Clínica</h3>
           <p style="font-size:14px; line-height:1.6;">
-            Identificada combinação de visão embaçada/distórica + fotofobia intensa + esfregaço forte nos olhos. 
+            Identificada combinação de queixa visual qualitativa (visão embaçada, halos ou distorção) + fotofobia intensa + esfregaço forte nos olhos.
             <strong>Recomenda-se avaliação oftalmológica em 2–5 dias.</strong>
           </p>
         </div>
@@ -824,6 +842,15 @@ h2 {
         <div class="report-section">
           <h3>Sinais identificados</h3>
           <div id="report-factors" style="font-size:14px; line-height:1.6;"></div>
+        </div>
+
+        <div class="report-section report-references">
+          <h3>Referências Bibliográficas</h3>
+          <ol>
+            <li>Moodley VR, Mashige KP. Keratoconus Risk Investigative Survey (KRIS).</li>
+            <li>Sociedade Brasileira de Oftalmologia (SBO). Campanha Junho Violeta de Conscientização sobre o Ceratocone.</li>
+            <li>Gomes JA, et al. Global Consensus on Keratoconus and Ectatic Diseases.</li>
+          </ol>
         </div>
 
         <div class="report-footer">
@@ -849,6 +876,10 @@ h2 {
 // DATA — KRIS Adaptado (10 perguntas principais + 2 contextuais)
 // ============================================================
 const QUESTIONS = [
+  // Amaurose Congênita de Leber é incluída aqui porque a doença cursa com o sinal
+  // óculo-digital de Franceschetti: a criança pressiona/esfrega cronicamente os olhos
+  // como resposta sensorial à baixa visão, e esse esfregaço repetido é o principal
+  // fator de risco mecânico para o desenvolvimento de ceratocone secundário.
   {
     id: "sistemica",
     title: "{nome} tem alguma dessas condições de saúde?",
@@ -919,12 +950,14 @@ const QUESTIONS = [
   },
   {
     id: "visao",
-    title: "Você notou a visão de {nome} embaçada ou distorcida?",
-    sub: "Aproximar o caderno do rosto, reclamar de não enxergar o quadro, ver halos ao redor de luzes.",
+    title: "Você notou alguma dessas mudanças na visão de {nome}?",
+    sub: "Pode marcar mais de uma opção. Pense em: aproximar o caderno do rosto, reclamar de não enxergar o quadro, ver halos ao redor de luzes ou linhas que parecem tortas.",
+    multi: true,
     options: [
-      { v: "sim",    label: "Sim, notei",                weight: 1, factorIfHigh: "Queixas de visão embaçada ou distorcida" },
-      { v: "as",     label: "Uma vez ou outra",          weight: 0.5, factorIfHigh: null },
-      { v: "nao",    label: "Não, parece tudo normal",   weight: 0, factorIfHigh: null },
+      { v: "embacada",   label: "Visão embaçada ou borrada",            weight: 1, factorIfHigh: "Queixa de visão embaçada" },
+      { v: "halos",      label: "Halos ao redor de luzes",              weight: 1, factorIfHigh: "Percepção de halos ao redor de luzes" },
+      { v: "distorcida", label: "Imagens distorcidas (linhas tortas)",  weight: 1, factorIfHigh: "Distorção visual (linhas tortas)" },
+      { v: "nao",        label: "Não, a visão parece normal",          weight: 0, factorIfHigh: null, exclusive: true },
     ],
     isRedFlagTrigger: true  // part of red flag
   },
@@ -1086,20 +1119,42 @@ function renderQuestion() {
   sub.textContent = q.sub;
   block.appendChild(sub);
 
+  if (q.multi && !Array.isArray(state.answers[q.id])) {
+    state.answers[q.id] = [];
+  }
+
   const wrap = document.createElement("div");
   wrap.className = "options";
   q.options.forEach((opt, idx) => {
     const btn = document.createElement("button");
-    btn.className = "option entrada";
+    btn.className = q.multi ? "option option-multi entrada" : "option entrada";
     btn.style.animationDelay = `${(idx + 2) * 60}ms`;
     btn.dataset.value = opt.v;
-    if (state.answers[q.id] === opt.v) btn.classList.add("selected");
+    const isSelected = q.multi
+      ? state.answers[q.id].includes(opt.v)
+      : state.answers[q.id] === opt.v;
+    if (isSelected) btn.classList.add("selected");
     btn.innerHTML = `<span class="dot"></span><span>${opt.label}</span>`;
     btn.addEventListener("click", () => {
-      state.answers[q.id] = opt.v;
-      wrap.querySelectorAll(".option").forEach(o => o.classList.remove("selected"));
-      btn.classList.add("selected");
-      nextBtn.disabled = false;
+      if (q.multi) {
+        let sel = state.answers[q.id];
+        if (opt.exclusive) {
+          sel = sel.includes(opt.v) ? [] : [opt.v];
+        } else {
+          sel = sel.filter(v => !q.options.find(o => o.v === v && o.exclusive));
+          sel = sel.includes(opt.v) ? sel.filter(v => v !== opt.v) : [...sel, opt.v];
+        }
+        state.answers[q.id] = sel;
+        wrap.querySelectorAll(".option").forEach(o => {
+          o.classList.toggle("selected", sel.includes(o.dataset.value));
+        });
+        nextBtn.disabled = sel.length === 0;
+      } else {
+        state.answers[q.id] = opt.v;
+        wrap.querySelectorAll(".option").forEach(o => o.classList.remove("selected"));
+        btn.classList.add("selected");
+        nextBtn.disabled = false;
+      }
     });
     wrap.appendChild(btn);
   });
@@ -1123,7 +1178,7 @@ function renderQuestion() {
 
   const nextBtn = document.createElement("button");
   nextBtn.className = "btn btn-primary";
-  nextBtn.disabled = !state.answers[q.id];
+  nextBtn.disabled = q.multi ? state.answers[q.id].length === 0 : !state.answers[q.id];
   nextBtn.innerHTML = `${i === QUESTIONS.length - 1 ? "Ver resultado" : "Próxima"}<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-5-5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
   nextBtn.addEventListener("click", () => {
     if (i < QUESTIONS.length - 1) {
@@ -1146,24 +1201,33 @@ function computeAndShowResult() {
   const factors = [];
   let redFlagTriggered = false;
 
-  // Check red flags: visao=sim AND intensidade=forte AND luz=muito
-  const visaoAns = state.answers["visao"];
+  // Red flag: ao menos uma queixa visual qualitativa crítica (embaçada/halos/distorção)
+  // SOMADA a fotofobia intensa E a esfregaço forte nos olhos.
+  const visaoSelecionadas = Array.isArray(state.answers["visao"]) ? state.answers["visao"] : [];
   const intensidadeAns = state.answers["intensidade"];
   const luzAns = state.answers["luz"];
-  const cocarAns = state.answers["cocar"];
 
-  // Red flag: visao embaçada + (fotofobia intensa OR esfregaço frequente intenso)
-  const hasVisao = visaoAns === "sim";
-  const hasFotofobia = luzAns === "muito";
+  const sintomasVisuaisCriticos = ["embacada", "halos", "distorcida"];
+  const hasVisaoCritica = visaoSelecionadas.some(v => sintomasVisuaisCriticos.includes(v));
+  const hasFotofobiaIntensa = luzAns === "muito";
   const hasEsfregacoForte = intensidadeAns === "forte";
-  const hasEsfregacoFrequente = cocarAns === "muito";
 
-  if (hasVisao && (hasFotofobia || (hasEsfregacoForte && hasEsfregacoFrequente))) {
+  if (hasVisaoCritica && hasFotofobiaIntensa && hasEsfregacoForte) {
     redFlagTriggered = true;
   }
 
   QUESTIONS.forEach(q => {
     const a = state.answers[q.id];
+    if (q.multi) {
+      const selecionadas = Array.isArray(a) ? a : [];
+      const opts = selecionadas.map(v => q.options.find(o => o.v === v)).filter(Boolean);
+      const maxWeight = opts.reduce((m, o) => Math.max(m, o.weight), 0);
+      total += maxWeight;
+      opts.forEach(o => {
+        if (o.factorIfHigh) factors.push({ text: o.factorIfHigh, weight: o.weight });
+      });
+      return;
+    }
     const opt = q.options.find(o => o.v === a);
     if (!opt) return;
     total += opt.weight;
@@ -1304,10 +1368,18 @@ function buildPrintReport(score, maxScore, level, redFlag, factors, actionText) 
   ansWrap.innerHTML = "";
   QUESTIONS.forEach(q => {
     const a = state.answers[q.id];
-    const opt = q.options.find(o => o.v === a);
     const div = document.createElement("div");
     div.className = "report-answer";
-    div.innerHTML = `<span class="q">${applyName(q.title).replace(/\?.*$/, "?")}</span><span class="a">${opt ? opt.label : "—"}</span>`;
+    let answerLabel;
+    if (q.multi) {
+      const selecionadas = Array.isArray(a) ? a : [];
+      const labels = selecionadas.map(v => q.options.find(o => o.v === v)?.label).filter(Boolean);
+      answerLabel = labels.length ? labels.join(", ") : "—";
+    } else {
+      const opt = q.options.find(o => o.v === a);
+      answerLabel = opt ? opt.label : "—";
+    }
+    div.innerHTML = `<span class="q">${applyName(q.title).replace(/\?.*$/, "?")}</span><span class="a">${answerLabel}</span>`;
     ansWrap.appendChild(div);
   });
 
